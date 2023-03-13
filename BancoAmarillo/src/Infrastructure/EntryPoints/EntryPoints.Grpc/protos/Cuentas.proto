@@ -1,0 +1,107 @@
+﻿syntax="proto3";
+
+option csharp_namespace = "EntryPoints.Grpc.Dtos.Protos.Cuentas";
+import "google/protobuf/timestamp.proto";
+
+service CuentaService {
+	rpc CrearCuenta(CuentaProto) returns(RespuestaCuenta);
+	rpc ObtenerCuentaId(CuentaRequest) returns(RespuestaCuenta);
+    rpc ActualizarCuenta(CuentaCompleta) returns(RespuestaCuenta);
+    rpc CancelarCuenta(CuentaRequest) returns(RespuestaCuenta);
+
+  //  rpc RealizarRetiro(TransacccionSimpleRequest) returns(RespuestaCuenta);
+
+ //   rpc RealizarConsignacion(TransacccionSimpleRequest) returns(RespuestaCuenta);
+
+    rpc ActivarCuentaAsync(CuentaRequest) returns(RespuestaCuenta);
+    rpc ObtenerCuentaNumero(NumeroCuentaRequest) returns(RespuestaCuenta);
+    rpc InactivarCuentaAsync(CuentaRequest) returns(RespuestaCuenta);
+
+  //  rpc ObtenerCuentaPorIdClienteAsync(CuentaClienteRequest) returns(RespuestaListaCuentas);
+}
+
+/*
+message TransacccionSimpleRequest{
+            string IdCuenta = 1;
+            float Monto = 2;
+}
+*/
+message NumeroCuentaRequest{
+            string Numerocuenta = 1;
+}
+
+message CuentaClienteRequest{
+            string IdCliente = 1;
+}
+
+message CuentaRequest{
+            string IdCuenta = 1;
+}
+
+
+message CuentaProto{
+            string IdCliente = 1;
+            TipoCuenta TipoCuenta = 2;
+            float Saldo = 3;
+            bool GMF = 4;
+}
+
+enum TipoCuenta{
+  AHORRO = 0;
+  CORRIENTE = 1;
+}
+
+message TransaccionProto{
+    string Id = 1;
+    string IdCuentaEmisora = 2;
+    string IdCuentaReceptora = 3;
+    TipoTransaccion TipoTransaccion = 4;
+    float Valor = 5;
+    string FechaMovimiento = 6;
+    TipoMovimiento TipoMovimiento = 7;
+}
+enum TipoTransaccion{
+        TRANSFERENCIA = 0;
+        CONSIGNACION = 1;
+        RETIRO = 2;
+}
+
+enum TipoMovimiento{
+  CREDITO = 0;
+  DEBITO = 1;
+}
+
+enum EstadoCuenta{
+        ACTIVA = 0;
+
+        INACTIVA = 1;
+
+        CANCELADA = 2;
+}
+
+
+message RespuestaCuenta{
+   string Mensaje = 1;
+   bool Error = 2;
+   CuentaCompleta Data = 3;
+}
+
+message RespuestaListaCuentas{
+   string Mensaje = 1;
+   bool Error = 2;
+   repeated CuentaCompleta Data = 3;
+}
+
+message CuentaCompleta{
+            string Id = 1;
+            string NumeroCuenta = 2;
+            string IdCliente = 3;
+            TipoCuenta TipoCuenta = 4;
+            EstadoCuenta EstadoCuenta = 5;
+            float Saldo = 6;
+            float SaldoDisponible = 7;
+            bool GMF = 8;
+            string FechaCreacion = 9;
+            string FechaModificacion = 10;
+            repeated TransaccionProto Transacciones = 11;
+}

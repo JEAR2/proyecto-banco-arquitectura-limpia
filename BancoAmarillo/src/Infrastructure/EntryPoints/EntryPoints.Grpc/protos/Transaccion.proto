@@ -1,0 +1,40 @@
+﻿syntax="proto3";
+
+option csharp_namespace = "EntryPoints.Grpc.Dtos.Protos";
+
+service TransaccionService {
+	rpc RealizarTransaccion(TransaccionRequest) returns (TransaccionRespuesta);
+}
+
+message TransaccionRequest {
+	string IdCuentaEmisora = 1;
+	string IdCuentaReceptora = 2;
+	TipoTransaccionEnum TipoTransaccion = 3;
+	float Valor = 4;
+}
+
+message TransaccionRespuesta {
+	string Mensaje = 1;
+	bool Error = 2;
+	TransaccionInfo Data = 3;
+}
+
+message TransaccionInfo {
+	string IdCuentaEmisora = 1;
+	string IdCuentaReceptora = 2;
+	TipoTransaccionEnum TipoTransaccion = 3;
+	float Valor = 4;
+	string FechaMovimiento = 5;
+	TipoMovimientoEnum TipoMovimiento = 6;
+}
+
+enum TipoTransaccionEnum {
+	TRANSFERENCIA = 0;
+	CONSIGNACION = 1;
+	RETIRO = 2;
+}
+
+enum TipoMovimientoEnum {
+	CREDITO = 0;
+	DEBITO = 1;
+}

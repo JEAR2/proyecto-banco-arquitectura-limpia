@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="6.2.0" />
+    <PackageReference Include="Calzolari.Grpc.Net.Client.Validation" Version="6.2.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+	<Protobuf Include="**\Cliente.proto" GprServices="Server" OutputDir="%(RelativePath)Dtos/" />
+	  <Protobuf Include="**\Auth.proto" GprServices="Server" OutputDir="%(RelativePath)Dtos/" />
+	  <Protobuf Include="**\Cuentas.proto" GprServices="Server" OutputDir="%(RelativePath)Dtos/" />
+	  <Protobuf Include="**\Transaccion.proto" GprServices="Server" OutputDir="%(RelativePath)Dtos/" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain\Domain.UseCase\Domain.UseCase.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+  </ItemGroup>
+</Project>

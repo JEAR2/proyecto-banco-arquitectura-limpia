@@ -1,0 +1,82 @@
+﻿syntax="proto3";
+
+option csharp_namespace = "EntryPoints.Grpc.Dtos.Protos.Cliente";
+import "protos/Cuentas.proto";
+service ClienteService{
+	rpc CrearCliente (ClienteRequest) returns (ResponseCliente);
+	rpc ObtenerCliente(IdCliente) returns (ResponseCliente);
+	rpc ObtenerClientes(Empty) returns (ListaClientes);
+	rpc EliminarCliente(IdCliente) returns (ResponseCliente);
+	rpc ActualizarCliente(ActualizarClienteProto) returns (ResponseCliente);
+	rpc ObtenerCuentasCliente(IdCliente) returns (ListaCuentasCliente);
+	rpc MarcarCuentaGMF(DatosMarcarCuentaGMF) returns (ResponseCliente);
+}
+
+message Empty{}
+message IdCliente{
+	string Id = 1;
+}
+
+message ActualizarClienteProto{
+	string ClienteId =1;
+	string Nombre = 2;
+	string Apellido = 3;
+}
+message ClienteRequest{
+	TipoIdenticacion TipoIdentificacion = 1;
+	string NumeroIdentificacion = 2;
+	string Nombre = 3;
+	string Apellido = 4;
+	string Correo = 5;
+	string FechaNacimiento = 6;
+
+}
+
+enum TipoIdenticacion{
+	CEDULACIUDADNIA = 0;
+	CEDULAEXTRANJERIA = 1;
+	PASAPORTE = 2;
+}
+
+message ResponseCliente{
+	bool Error = 1;
+	string Mensaje = 2;
+	ClienteResponse data = 3;
+}
+
+message ClienteResponse{
+
+	string Id =1;
+	TipoIdenticacion TipoIdentificacion = 2;
+	string NumeroIdentificacion = 3;
+	string Nombre = 4;
+	string Apellido = 5;
+	string Correo = 6;
+	string FechaNacimiento = 7;
+	string FechaCreacion = 8;
+	string FechaModificacion = 9;
+	string UsuarioModificacion=10;
+	string Estado = 11;
+	repeated CuentaCompleta Cuentas = 12;
+}
+message ListaClientes{
+	repeated ClienteResponse Clientes = 1;
+}
+
+message CuentasClienteResponse{
+	 string Id = 1;
+     TipoCuenta TipoCuenta = 2;
+     float Saldo = 3;
+     float SaldoDisponible = 4;
+	 EstadoCuenta EstadoCuenta = 5;
+}
+
+
+message ListaCuentasCliente{
+	repeated CuentasClienteResponse cuentas = 1;
+}
+
+message DatosMarcarCuentaGMF{
+	string IdCliente = 1;
+	string IdCuenta = 2;
+}

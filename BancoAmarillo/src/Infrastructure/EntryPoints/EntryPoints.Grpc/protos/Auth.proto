@@ -1,0 +1,18 @@
+﻿syntax="proto3";
+
+option csharp_namespace = "EntryPoints.Grpc.Dtos.Protos";
+
+service Auth {
+	rpc CrearUsuario(UsuarioProto) returns(RespuestaAuth);
+	rpc IniciarSesion(UsuarioProto) returns(RespuestaAuth);
+}
+
+message UsuarioProto{
+	 string Correo =1;
+     string Clave =2;
+}
+message RespuestaAuth{
+	bool Error = 1;
+	string Mensaje=2;
+	string Token =3;
+}
